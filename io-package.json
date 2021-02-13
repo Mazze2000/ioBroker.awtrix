@@ -56,7 +56,7 @@
         "main": "main.js",
         "icon": "awtrix.png",
         "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/klein0r/ioBroker.birthdays/master/admin/birthdays.png",
+        "extIcon": "https://raw.githubusercontent.com/mazze2000/ioBroker.awtrix/master/admin/awtrix.png",
         "readme": "https://github.com/Mazze2000/ioBroker.awtrix/README.md",
         "loglevel": "info",
         "mode": "daemon",
