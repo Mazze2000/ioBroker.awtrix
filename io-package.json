@@ -16,7 +16,7 @@
                 "zh-cn": "首次出版"
             }
         },
-        "title": "Awtrix2",
+        "title": "Awtrix",
         "titleLang": {
             "en": "Template (JavaScript)",
             "de": "Vorlage (JavaScript)",
@@ -56,7 +56,7 @@
         "main": "main.js",
         "icon": "awtrix.png",
         "enabled": true,
-        "extIcon": "https://github.com/Mazze2000/ioBroker.awtrix/admin/awtrix.png",
+        "extIcon": "https://raw.githubusercontent.com/mazze2000/ioBroker.awtrix/master/admin/awtrix.png",
         "readme": "https://github.com/Mazze2000/ioBroker.awtrix/README.md",
         "loglevel": "info",
         "mode": "daemon",
