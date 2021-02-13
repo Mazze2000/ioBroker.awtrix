@@ -54,7 +54,7 @@
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "main": "main.js",
-        "icon": "awtrix.png",
+        "icon": "template.png",
         "enabled": true,
         "extIcon": "https://raw.githubusercontent.com/mazze2000/ioBroker.awtrix/master/admin/awtrix.png",
         "readme": "https://github.com/Mazze2000/ioBroker.awtrix/README.md",
