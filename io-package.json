@@ -16,7 +16,7 @@
                 "zh-cn": "首次出版"
             }
         },
-        "title": "Awtrix (JavaScript)",
+        "title": "Awtrix",
         "titleLang": {
             "en": "Template (JavaScript)",
             "de": "Vorlage (JavaScript)",
@@ -42,20 +42,21 @@
             "zh-cn": "适配器开发的模板"
         },
         "authors": [
-            "Author <author@mail.com>"
+            "Matthias Wahl <MatthiasWahl@mail.de>"
         ],
         "keywords": [
             "ioBroker",
             "template",
             "Smart Home",
-            "home automation"
+            "home automation",
+            "atrix"
         ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "main": "main.js",
         "icon": "awtrix.png",
         "enabled": true,
-        "extIcon": "https://github.com/Mazze2000/ioBroker.awtrix/blob/master/admin/awtrix.png",
+        "extIcon": "https://github.com/Mazze2000/ioBroker.awtrix/admin/awtrix.png",
         "readme": "https://github.com/Mazze2000/ioBroker.awtrix/README.md",
         "loglevel": "info",
         "mode": "daemon",
