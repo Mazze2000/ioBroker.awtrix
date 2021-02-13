@@ -30,8 +30,8 @@
             "zh-cn": "范本（JavaScript）"
         },
         "desc": {
-            "en": "Template for adapter development",
-            "de": "Vorlage für die Adapterentwicklung",
+            "en": "Adapter for simple communikation with the awtrix",
+            "de": "Adapter fuer einfache Kommunikation mit der Awtrix",
             "ru": "Шаблон для разработки адаптера",
             "pt": "Modelo para desenvolvimento de adaptador",
             "nl": "Sjabloon voor adapterontwikkeling",
@@ -46,10 +46,9 @@
         ],
         "keywords": [
             "ioBroker",
-            "template",
             "Smart Home",
             "home automation",
-            "atrix"
+            "awtrix"
         ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
