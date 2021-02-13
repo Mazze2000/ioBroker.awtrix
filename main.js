@@ -11,7 +11,7 @@ const utils = require('@iobroker/adapter-core');
 // Load your modules here, e.g.:
 // const fs = require("fs");
 
-class Template extends utils.Adapter {
+class Awtrix extends utils.Adapter {
 
     /**
      * @param {Partial<utils.AdapterOptions>} [options={}]
@@ -19,7 +19,7 @@ class Template extends utils.Adapter {
     constructor(options) {
         super({
             ...options,
-            name: 'template',
+            name: 'awtrix',
         });
         this.on('ready', this.onReady.bind(this));
         this.on('stateChange', this.onStateChange.bind(this));
