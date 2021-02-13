@@ -1,22 +1,23 @@
 {
-  "name": "iobroker.template",
+  "name": "iobroker.awtrix",
   "version": "0.0.1",
-  "description": "Template for adapter development",
+  "description": "Awtrix adapter",
   "author": {
-    "name": "Author",
-    "email": "author@mail.com"
+    "name": "Matthias Wahl",
+    "email": "MatthiasWahl@mailde"
   },
-  "homepage": "https://github.com/Author/ioBroker.template",
+  "homepage": "https://github.com/Mazze2000/ioBroker.awtrix",
   "license": "MIT",
   "keywords": [
     "ioBroker",
     "template",
     "Smart Home",
-    "home automation"
+    "home automation",
+    "awtrix"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Author/ioBroker.template"
+    "url": "https://github.com/Mazze2000/ioBroker.awtrix"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.4.0"
@@ -53,7 +54,7 @@
     "lint": "eslint"
   },
   "bugs": {
-    "url": "https://github.com/Author/ioBroker.template/issues"
+    "url": "https://github.com/Mazze2000/ioBroker.awtrix/issues"
   },
   "readmeFilename": "README.md"
 }
