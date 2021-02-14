@@ -1,90 +1,147 @@
-![Logo](admin/dmxface.png)
-http://www.dmxface.at
-## ioBroker.dmxface 1.1.0 Adapter
-DMXface is a programmable IO controller with features as follows:
- DMX OUT and DMX IN bus
- 8 to 16 INports with analog to digital support for all channels
- 8 to 16 OUTports
- 6 PWM LED driver ports up to 1A each channel
- IR receiver and transmitter port
- RS485 Bus for the connection of up to 8 LCD touch displays with 2.4 or 5 inches.
- LAN Interface supporting up to 7 individual configurable sockets
- USB Port for programming and communication
- RTC Clock with day of week / date
- Optional RS232, KNX, DALI, audio triggering, ...<br>
- Available resources:
-224 DMX channels (512+32 with PRO Firmware)<br>
-180 Storeable scenes with fade times 0.0 to 165 Sec. 
-28	Programs (56 with PRO Firmware)
-64	Event triggers (80 with PRO Firmware)
-4	Recordable timelines with 50msek resolution (8 with PRO Firmware)<br>
-32	Sendsequences (48 with PRO Firmware)<br>
-Dokumentation and communication protocoll downloads: 
-http://www.spl-technik.at/index.php/dmxface-downloads
- 
-## DMXface adapter for ioBroker
-This adapter connects the DMXfaceXP controller with ioBroker.
-The communication protocoll used is the DMXface ACTIVE SEND protocoll.
-Rev 1.1.0 supports additional features like min/max tracking of channels as well 
-the calculation of power consumed for selected channels.
+![Logo](admin/luftdaten.png)
 
-## Setup the DMXface
-To configure the DMXface controller, you need the 'DMXface Console' downloadable at http://www.dmxface.at
-After connecting by USB, you can access and change the controllers setup und network settings as well programm the controller.
+# ioBroker.luftdaten
 
-## DMXface network settings (Menu: DMXface settings / Network setup)<br>
-Here you can configure a valid IP address for the DMXface controller.
-To get the DMXface connected to the IO Broker you have as well to setup the socket 6 or 7:
-Set it to 'TCP SERVER', 'ACTIVE SEND PROTOCOLL' with a valid PORT (Default = 6000).
+[![NPM version](http://img.shields.io/npm/v/iobroker.luftdaten.svg)](https://www.npmjs.com/package/iobroker.luftdaten)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.luftdaten.svg)](https://www.npmjs.com/package/iobroker.luftdaten)
+[![Stable](http://iobroker.live/badges/luftdaten-stable.svg)](http://iobroker.live/badges/luftdaten-stable.svg)
+[![installed](http://iobroker.live/badges/luftdaten-installed.svg)](http://iobroker.live/badges/luftdaten-installed.svg)
+[![Dependency Status](https://img.shields.io/david/klein0r/iobroker.luftdaten.svg)](https://david-dm.org/klein0r/iobroker.luftdaten)
+[![Known Vulnerabilities](https://snyk.io/test/github/klein0r/ioBroker.luftdaten/badge.svg)](https://snyk.io/test/github/klein0r/ioBroker.luftdaten)
+[![Build Status](http://img.shields.io/travis/klein0r/ioBroker.luftdaten.svg)](https://travis-ci.org/klein0r/ioBroker.luftdaten)
 
-## DMXface setup settings (Menu: DMXface settings / Basic setup)<br>
-To receive IO Port changes or IR Remote control data, enable 'LAN SOCKET 6 or 7 sends ACTS messages' and select 
-Outport change, Inport change and Infrared receive in the 'Send ACTS message at event' area below.
-To receive DMX channel values enable 'LAN SOCKET 6 or 7 sends DMX channel values.
-Select the number of DMX channels (max. 224) to be transmitted to ioBroker and the interval in which the channels are to be sent.
-Save the changes, done.
+[![NPM](https://nodei.co/npm/iobroker.luftdaten.png?downloads=true)](https://nodei.co/npm/iobroker.luftdaten/)
 
-## Add adapter to ioBroker
-Add the DMXface adapter from github  https://github.com/DMXface/ioBroker.dmxface.git
-Create an instance of the adapter.
+This adapter adds "luftdaten.info" sensor data to your ioBroker installation.
+You can decide if you want to add a local sensor by ip or if you just want to use the API of lufdaten.info to get the data of another sensor.
 
-## Adapter configuration
-IP address:  Same as used for the DMXfaceXP controller.
-Port: Same as configured in the network socket 6 or 7.
-Last DMX channel used: Number of DMX state objects that will be created when the DMXface adapter ist started.
-Additional channel requests:
-DMXface covers the possibility to process values of DMX channels, AD values of IN- or BUSports by a conversion table. 
-Here you can list additional ports that should be requested from such a conversion.
-Enter the required channel separated by semicolons like IN1, OUT5, DMX112,...
-ioBroker requests the values one by one withing the timing and stores it in additional float numbers in states VALUE_...<br>
+## Configuration
 
-Power consumption and runtime tracking:
-Here you can list IO and DMX ports, optional with the power of the load controlled by the channel.
-Format is e.g. OUT5(750) this means that OUTPORT5 controls a 750W load.
-If no powerload is added just the runtime will be tracked.
-As soon there is a channel added you will get one or two new states for the port.
-STAT_HRS_OUTPORT05 and if a power value is added the state STAT_KWH_OUTPORT05. 
-STAT_KWH contains the KW/h and increases as soon OUTPORT5 is true.
-STAT_HRS is the time in hours while OUTPORT5 was true.
-If you use a DMX channel the power value is calculated with the value of the DMX channel.
-A DMX value =0 is off, a DMX value of 128 adds half of the power value, a DMX value 255 adds full value to the POWER_xx value.
-The STAT_HRS value increases as soon the DMX value is > 0.<br>
+### Local
 
-Request timing (ms): This value specifies the timing within the additional channels are requested one by one and the
-power consumption and runtime is calculated.<br>
+1. Build your own adapter and add it to your local wifi network
+2. Create a new instance of the adapter
+3. Choose "Local" as type
+4. Fill the IP or Hostname of the sensor in the second input
+5. Choose a name and save the settings
 
-## 1.1.0
-released for use with DMXfaceXP Controller
+Wait some minutes until the cronjob collects the data for the first time.
 
-##  Changelog
-1.0.0  Initial release<br>
-1.0.1  Bugfixes (reconnect procedure after loosing TCP connection)<br>
-1.0.2  File cleanup+ Bugfix (List of additional ports causes error @ first start due to NULL value<br>
-1.1.0  New version of the adapter containing min/max tracking and power tracking)
+*Feel free to change the schedule settings in the instances tab (default is every 15 minutes).*
+
+### Remote
+
+1. Choose one of the sensors on the online map: [deutschland.maps.luftdaten.info](https://deutschland.maps.luftdaten.info/)
+2. Click on the sensor and copy the ID (#XXXXX)
+3. Create a new instance of the adapter
+4. Choose "Remote" as type
+5. Fill the ID of the sensor in the second input
+6. Choose a name and save the settings
+
+Wait some minutes until the cronjob collects the data for the first time.
+
+*Feel free to change the schedule settings in the instances tab (default is every 15 minutes).*
+
+## Contributors
+
+- klein0r
+- pix
+- GermanBluefox
+- Apollon77
+
+## Changelog
+
+### 1.0.2
+
+* (klein0r) Fixed async object creation
+
+### 1.0.1
+
+* (klein0r) Added iobroker sentry
+
+### 1.0.0
+
+* (klein0r) First stable release
+
+### 0.0.18
+
+* (klein0r) Added units for pressure and noise
+
+### 0.0.17
+
+* (klein0r) Added link to sensor map
+
+### 0.0.16
+
+* (klein0r) Minor bugfixes
+
+### 0.0.15
+
+* (klein0r) setTimeout found in main.js, but no clearTimeout detected
+
+### 0.0.14
+
+* (klein0r) Fixed sensor data check issue
+
+### 0.0.13
+
+* (klein0r) Added missing translations
+
+### 0.0.12
+
+* (klein0r) Minor bugfixes
+* (dominik-lienemann) Added timestamp of last sensor update
+
+### 0.0.11
+
+* (klein0r) fixed units of states
+
+### 0.0.10
+
+* (klein0r) changed API url
+
+### 0.0.9
+
+* (klein0r) minor bugfixes
+
+### 0.0.9
+
+* (klein0r) improved logging
+
+### 0.0.8
+
+* (klein0r) added response time and units
+
+### 0.0.7
+
+* (klein0r) merged pull requests - thanks a lot for contribution
+
+### 0.0.6
+
+* (klein0r) changed type to weather
+
+### 0.0.5
+
+* (klein0r) fixed issues when sensor is not available
+* (klein0r) added location information for remote sensors
+
+### 0.0.4
+
+* (pix) path is IP if sensor is local
+
+### 0.0.3
+
+* (pix) path and sensor name added
+
+### 0.0.1
+
+* (klein0r) initial release
+
 ## License
-MIT License<br>
 
-Copyright (c) 2020 SPaL Oliver Hufnagl <mail@dmxface.at><br>
+The MIT License (MIT)
+
+Copyright (c) 2021 Matthias Kleine <info@haus-automatisierung.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -93,13 +150,13 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

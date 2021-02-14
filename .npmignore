@@ -3,6 +3,7 @@
 node_modules/
 nbproject/
 .vs*/
+*.code-workspace
 Thumbs.db
 gulpfile.js
 
@@ -10,8 +11,7 @@ test/
 travis/
 .travis.yml
 appveyor.yml
-.travis.yaml
-appveyor.yaml
+tsconfig.json
 
 .eslintrc.json
 .eslintrc.js

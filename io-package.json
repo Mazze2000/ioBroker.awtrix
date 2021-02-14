@@ -1,68 +1,58 @@
 {
-   "common":{
-      "name":"awtrix",
-      "version":"0.0.1",
-      "news":{
-         "0.0.1":{
-            "en":"ioBroker adapter for awtrix",
-            "de":"ioBroker Adapter für awtrix"
-         }
-      },
-      "title":"awtrix",
-      "titleLang":{
-         "en":"awtrix ioBroker adapter",
-         "de":"awtrix ioBroker Adapter"
-      },
-      "desc":{
-         "en":"Connects awtrix by awtrix api to ioBroker",
-         "de":"Verbindet awtrix über die awtrix api mit ioBroker"
-      },
-      "authors":[
-         "Author <matthiaswahl@mail.de>"
-      ],
-      "keywords":[
-         "ioBroker",
-         "awtrix",
-         "Smart Home",
-         "home automation"
-      ],
-      "license":"MIT",
-      "platform":"Javascript/Node.js",
-      "main":"main.js",
-      "icon":"icon.png",
-      "enabled":true,
-      "extIcon":"https://raw.githubusercontent.com/Mazze2000/ioBroker.awtrix/master/admin/icon.png",
-      "readme":"https://github.com/DMXface/Mazze2000.awtrix/blob/master/README.md",
-      "loglevel":"info",
-      "mode":"daemon",
-      "type":"general",
-      "compact":true,
-      "materialize":true,
-      "materializeTab":true,
-      "adminTab":{
-         "singleton":true,
-         "name":{
-            "en":"DMXfaceXP",
-            "de":"DMXfaceXP"
-         },
-         "link":"www.dmxface.at",
-         "fa-icon":"info"
-      },
-      "supportCustoms":true,
-      "dependencies":[
-         {
-            "js-controller":">=1.4.2"
-         }
-      ]
-   },
-   "native":{
-      "ipaddress":"0.0.0.0",
-      "port":"7000"
-   },
-   "objects":[
-
-   ],
-   "instanceObjects":[
-
-   ]
+    "common": {
+        "name": "awtrix",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial adapter",
+                "de": "Initiale Version"
+            }
+        },
+        "title": "awtrix adapter",
+        "titleLang": {
+            "en": "Awtrix adapter",
+            "de": "Awtrix adapter"
+        },
+        "desc": {
+            "en": "Simplifies communication with your Awtrix",
+            "de": "Vereinfacht die Kommunikation mit deiner Awtrix"
+        },
+        "authors": [
+            "Matthias Wahl <Matthiaswahl@mail.de>"
+        ],
+        "keywords": [
+            "diy",
+            "matrix"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "awtrix.png",
+        "extIcon": "https://raw.githubusercontent.com/klein0r/ioBroker.luftdaten/master/admin/luftdaten.png",
+        "enabled": true,
+        "readme": "https://github.com/klein0r/ioBroker.luftdaten/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "schedule",
+        "allowInit": true,
+        "schedule": "*/30 * * * *",
+        "type": "weather",
+        "compact": true,
+        "connectionType": "cloud",
+        "dataSource": "poll",
+        "materialize": true,
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ],
+        "plugins": {
+            "sentry": {
+                "dsn": "https://baf35e4e423d409bbec94cb01b55257e@sentry.iobroker.net/103"
+            }
+        }
+    },
+    "native": {
+    },
+    "objects": [
+    ]
 }
