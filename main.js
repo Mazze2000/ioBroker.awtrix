@@ -43,7 +43,7 @@ class Luftdaten extends utils.Adapter {
                     const content = response.data;
                     this.log.debug('received data (' + response.status + '): ' + JSON.stringify(content));
 
-                    await this.setObjectNotExistsAsync(path + 'responseCode', {
+                    await this.setObjectNotExistsAsync('responseCode', {
                         type: 'state',
                         common: {
                             name: 'responseCode',
@@ -54,7 +54,7 @@ class Luftdaten extends utils.Adapter {
                         },
                         native: {}
                     });
-                    this.setState(path + 'responseCode', {val: response.status, ack: true});
+                    this.setState('responseCode', {val: response.status, ack: true});
                 }
             ).catch(
                 (error) => {
