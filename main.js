@@ -29,55 +29,57 @@ class Luftdaten extends utils.Adapter {
         this.log.info('hostPort= ' + hostPort);
 
         await this.setObjectNotExistsAsync('getData', {
-            //type: 'channel',
-            //common: {
-                //name: 'getData',
-                //role: 'data'
-            //},
+            native: {}
+        });
+        await this.setObjectNotExistsAsync('matrixInfo', {
             native: {}
         });
 
         if(hostAddress && hostPort){
             this.log.info('starting request...');
-            axios({
-                method: 'post',
-                baseURL: 'http://' + hostAddress + ':' + hostPort,
-                url: '/api/v3/basics',
-                responseType: 'json',
-                data: {
-                    get: 'installedApps'
-                  }
-            }).then(
-                async (response) => {
-                    const content = response.data;
-                    this.log.info('resposne: ' + JSON.stringify(content));
-                    
-                    await this.setObjectNotExistsAsync('getData.installedApps', {
-                        type: 'state',
-                        common: {
-                            name: 'installedApps',
-                            type: 'string',
-                            role: 'json',
-                            read: true,
-                            write: false
-                        },
-                        native: {}
-                    });
-                    this.setState('getData.installedApps', {val: JSON.stringify(content), ack: true});
-                }
-            ).catch(
-                (error) => {
-                    if (error.response) {
-                        this.log.warn('received error ' + error.response.status + ' response from local sensor ' + sensorIdentifier + ' with content: ' + JSON.stringify(error.response.data));
-                    } else if (error.request) {
-                        this.log.error(error.message);
-                    } else {
-                        this.log.error(error.message);
+
+            var getParameter = ['cloudAnimations', 'installedApps', 'appList', 'settings', 'version', 'uptime', 'powerState', 'log', 'matrixInfo'];
+
+
+            for(var i=0;i<getParameter.length;i++){
+                axios({
+                    method: 'post',
+                    baseURL: 'http://' + hostAddress + ':' + hostPort,
+                    url: '/api/v3/basics',
+                    responseType: 'json',
+                    data: {
+                        get: getParameter[i]
                     }
-                }
-            );
-
-
+                }).then(
+                    async (response) => {
+                        const content = response.data;
+                        this.log.info('resposne: ' + JSON.stringify(content));
+                        
+                        await this.setObjectNotExistsAsync('getData.' + getParameter[i], {
+                            type: 'state',
+                            common: {
+                                name: getParameter[i],
+                                type: 'string',
+                                role: 'json',
+                                read: true,
+                                write: false
+                            },
+                            native: {}
+                        });
+                        this.setState('getData.' + getParameter[i], {val: JSON.stringify(content), ack: true});
+                    }
+                ).catch(
+                    (error) => {
+                        if (error.response) {
+                            this.log.warn('received error ' + error.response.status + ' response from local sensor ' + sensorIdentifier + ' with content: ' + JSON.stringify(error.response.data));
+                        } else if (error.request) {
+                            this.log.error(error.message);
+                        } else {
+                            this.log.error(error.message);
+                        }
+                    }
+                );
+            }
         } else {
             this.killTimeout = setTimeout(this.stop.bind(this), 10000);
         }
