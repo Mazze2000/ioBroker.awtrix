@@ -29,7 +29,7 @@ class Luftdaten extends utils.Adapter {
         this.log.info('hostPort= ' + hostPort);
 
         if(hostAddress && hostPort){
-
+            this.log.info('starting request...');
             axios({
                 method: 'post',
                 baseURL: 'http://' + hostAddress + ':' + hostPort,
