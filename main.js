@@ -23,12 +23,55 @@ class Luftdaten extends utils.Adapter {
 
     async onReady() {
         const hostAddress = this.config.hostAddress;
-        const hostPort = this.config.sensorIdentifier;
+        const hostPort = this.config.hostPort;
 
         this.log.info('hostAddress= ' + hostAddress);
         this.log.info('hostPort= ' + hostPort);
 
-        this.killTimeout = setTimeout(this.stop.bind(this), 10000);
+        if(hostAddress && hostPort){
+
+            axios({
+                method: 'post',
+                baseURL: 'http://' + hostAddress + ':' + hostPort,
+                url: '/api/v3/basics',
+                responseType: 'json',
+                data: {
+                    get: 'installedApps'
+                  }
+            }).then(
+                async (response) => {
+                    const content = response.data;
+                    this.log.debug('received data (' + response.status + '): ' + JSON.stringify(content));
+
+                    await this.setObjectNotExistsAsync(path + 'responseCode', {
+                        type: 'state',
+                        common: {
+                            name: 'responseCode',
+                            type: 'number',
+                            role: 'value',
+                            read: true,
+                            write: false
+                        },
+                        native: {}
+                    });
+                    this.setState(path + 'responseCode', {val: response.status, ack: true});
+                }
+            ).catch(
+                (error) => {
+                    if (error.response) {
+                        this.log.warn('received error ' + error.response.status + ' response from local sensor ' + sensorIdentifier + ' with content: ' + JSON.stringify(error.response.data));
+                    } else if (error.request) {
+                        this.log.error(error.message);
+                    } else {
+                        this.log.error(error.message);
+                    }
+                }
+            );
+
+
+        } else {
+            this.killTimeout = setTimeout(this.stop.bind(this), 10000);
+        }
     }
 
     onUnload(callback) {
