@@ -9,32 +9,6 @@ const adapterName = require('./package.json').name.split('.').pop();
 
 class Luftdaten extends utils.Adapter {
 
-    const unitList = {
-        Hum: '%',
-        Temp: '°C',
-        wifiquality: '%',
-        wifissid: '',
-        IP: '',
-        latency: 'ms',
-        hPa: 'hPa',
-        wifirssi: 'dB',
-        version: 'µs',
-        LUX: 'lx'
-    };
-    
-    const roleList = {
-        Hum: 'value.procent',
-        Temp: 'value.temperature',
-        wifiquality: 'value.procent',
-        wifissid: 'value',
-        IP: 'value',
-        latency: 'value.time',
-        hPa: 'value.pressure',
-        wifirssi: 'value.decibel',
-        version: 'value',
-        LUX: 'value.luminousFlux'
-    };
-
     constructor(options) {
         super({
             ...options,
@@ -48,6 +22,32 @@ class Luftdaten extends utils.Adapter {
     }
 
     async onReady() {
+        const unitList = {
+            Hum: '%',
+            Temp: '°C',
+            wifiquality: '%',
+            wifissid: '',
+            IP: '',
+            latency: 'ms',
+            hPa: 'hPa',
+            wifirssi: 'dB',
+            version: 'µs',
+            LUX: 'lx'
+        };
+        
+        const roleList = {
+            Hum: 'value.procent',
+            Temp: 'value.temperature',
+            wifiquality: 'value.procent',
+            wifissid: 'value',
+            IP: 'value',
+            latency: 'value.time',
+            hPa: 'value.pressure',
+            wifirssi: 'value.decibel',
+            version: 'value',
+            LUX: 'value.luminousFlux'
+        };
+
         const hostAddress = this.config.hostAddress;
         const hostPort = this.config.hostPort;
 
