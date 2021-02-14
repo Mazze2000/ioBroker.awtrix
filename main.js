@@ -38,27 +38,27 @@ class Luftdaten extends utils.Adapter {
         if(hostAddress && hostPort){
             this.log.info('starting request...');
 
-            var getParameter = ['cloudAnimations', 'installedApps', 'appList', 'settings', 'version', 'uptime', 'powerState', 'log', 'matrixInfo'];
+            axios({
+                method: 'post',
+                baseURL: 'http://' + hostAddress + ':' + hostPort,
+                url: '/api/v3/basics',
+                responseType: 'json',
+                data: {
+                    get: 'matrixInfo'
+                }
+            }).then(
+                async (response) => {
+                    const content = response.data;
+                    this.log.info('resposne: ' + JSON.stringify(content));
 
+                    for (var key in content){
+                        var value = content[key];
+                        //document.write("<br> - " + key + ": " + value);
 
-            for(var i=0;i<getParameter.length;i++){
-                axios({
-                    method: 'post',
-                    baseURL: 'http://' + hostAddress + ':' + hostPort,
-                    url: '/api/v3/basics',
-                    responseType: 'json',
-                    data: {
-                        get: getParameter[i]
-                    }
-                }).then(
-                    async (response) => {
-                        const content = response.data;
-                        this.log.info('resposne: ' + JSON.stringify(content));
-                        
-                        await this.setObjectNotExistsAsync('getData.' + getParameter[i], {
+                        await this.setObjectNotExistsAsync('matrixInfo.' + key, {
                             type: 'state',
                             common: {
-                                name: getParameter[i],
+                                name: key,
                                 type: 'string',
                                 role: 'json',
                                 read: true,
@@ -66,20 +66,21 @@ class Luftdaten extends utils.Adapter {
                             },
                             native: {}
                         });
-                        this.setState('getData.' + getParameter[i], {val: JSON.stringify(content), ack: true});
+
+                        this.setState('matrixInfo.' + key, {val: value, ack: true});
                     }
-                ).catch(
-                    (error) => {
-                        if (error.response) {
-                            this.log.warn('received error ' + error.response.status + ' response from local sensor ' + sensorIdentifier + ' with content: ' + JSON.stringify(error.response.data));
-                        } else if (error.request) {
-                            this.log.error(error.message);
-                        } else {
-                            this.log.error(error.message);
-                        }
+                }
+            ).catch(
+                (error) => {
+                    if (error.response) {
+                        this.log.warn('received error ' + error.response.status + ' response from local sensor ' + sensorIdentifier + ' with content: ' + JSON.stringify(error.response.data));
+                    } else if (error.request) {
+                        this.log.error(error.message);
+                    } else {
+                        this.log.error(error.message);
                     }
-                );
-            }
+                }
+            );
         } else {
             this.killTimeout = setTimeout(this.stop.bind(this), 10000);
         }
