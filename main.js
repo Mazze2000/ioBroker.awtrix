@@ -54,7 +54,7 @@ class Luftdaten extends utils.Adapter {
                         },
                         native: {}
                     });
-                    this.setState('installedApps', {val: JSON.stringify(content), ack: true});
+                    this.setState('installedApps', {content, ack: true});
                 }
             ).catch(
                 (error) => {
