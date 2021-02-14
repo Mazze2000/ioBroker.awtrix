@@ -29,11 +29,11 @@ class Luftdaten extends utils.Adapter {
         this.log.info('hostPort= ' + hostPort);
 
         await this.setObjectNotExistsAsync('getData', {
-            type: 'channel',
-            common: {
-                name: 'getData',
-                role: 'data'
-            },
+            //type: 'channel',
+            //common: {
+                //name: 'getData',
+                //role: 'data'
+            //},
             native: {}
         });
 
