@@ -31,8 +31,8 @@ class Luftdaten extends utils.Adapter {
         await this.setObjectNotExistsAsync('getData', {
             type: 'channel',
             common: {
-                name: 'GetData',
-                role: 'value'
+                name: 'getData',
+                role: 'data'
             },
             native: {}
         });
@@ -52,7 +52,7 @@ class Luftdaten extends utils.Adapter {
                     const content = response.data;
                     this.log.info('resposne: ' + JSON.stringify(content));
                     
-                    await this.setObjectNotExistsAsync('installedApps', {
+                    await this.setObjectNotExistsAsync('getData.installedApps', {
                         type: 'state',
                         common: {
                             name: 'installedApps',
@@ -63,7 +63,7 @@ class Luftdaten extends utils.Adapter {
                         },
                         native: {}
                     });
-                    this.setState('installedApps', {val: JSON.stringify(content), ack: true});
+                    this.setState('getData.installedApps', {val: JSON.stringify(content), ack: true});
                 }
             ).catch(
                 (error) => {
