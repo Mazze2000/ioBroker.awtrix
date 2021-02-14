@@ -48,7 +48,7 @@ class Luftdaten extends utils.Adapter {
                         common: {
                             name: 'installedApps',
                             type: 'array',
-                            role: 'value',
+                            role: 'json',
                             read: true,
                             write: false
                         },
