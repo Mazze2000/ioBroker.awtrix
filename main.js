@@ -79,6 +79,7 @@ class Luftdaten extends utils.Adapter {
 
                     for (var key in content){
                         var value = content[key];
+
                         //document.write("<br> - " + key + ": " + value);
                         this.log.info(key + ' - ' + roleList.key + ' - ' + unitList.key);
                         await this.setObjectNotExistsAsync('matrixInfo.' + key, {
@@ -86,8 +87,8 @@ class Luftdaten extends utils.Adapter {
                             common: {
                                 name: key,
                                 type: 'number',
-                                role: roleList.key,
-                                unit: unitList.key,
+                                role: roleList[key],
+                                unit: unitList[key],
                                 read: true,
                                 write: false
                             },
