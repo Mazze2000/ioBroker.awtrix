@@ -42,7 +42,7 @@ class Luftdaten extends utils.Adapter {
                 async (response) => {
                     const content = response.data;
                     this.log.debug('received data (' + response.status + '): ' + JSON.stringify(content));
-
+                    this.log.info('resposne: ' + JSON.stringify(content));
                     await this.setObjectNotExistsAsync('responseCode', {
                         type: 'state',
                         common: {
