@@ -41,20 +41,20 @@ class Luftdaten extends utils.Adapter {
             }).then(
                 async (response) => {
                     const content = response.data;
-                    this.log.debug('received data (' + response.status + '): ' + JSON.stringify(content));
                     this.log.info('resposne: ' + JSON.stringify(content));
-                    await this.setObjectNotExistsAsync('responseCode', {
+                    
+                    await this.setObjectNotExistsAsync('installedApps', {
                         type: 'state',
                         common: {
-                            name: 'responseCode',
-                            type: 'number',
+                            name: 'installedApps',
+                            type: 'text',
                             role: 'value',
                             read: true,
                             write: false
                         },
                         native: {}
                     });
-                    this.setState('responseCode', {val: 1, ack: true});
+                    this.setState('responseCode', {val: JSON.stringify(content), ack: true});
                 }
             ).catch(
                 (error) => {
