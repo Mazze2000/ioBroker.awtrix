@@ -1,108 +1,90 @@
-![Logo](admin/awtrix.png)
-# ioBroker.template
+![Logo](admin/dmxface.png)
+http://www.dmxface.at
+## ioBroker.dmxface 1.1.0 Adapter
+DMXface is a programmable IO controller with features as follows:
+ DMX OUT and DMX IN bus
+ 8 to 16 INports with analog to digital support for all channels
+ 8 to 16 OUTports
+ 6 PWM LED driver ports up to 1A each channel
+ IR receiver and transmitter port
+ RS485 Bus for the connection of up to 8 LCD touch displays with 2.4 or 5 inches.
+ LAN Interface supporting up to 7 individual configurable sockets
+ USB Port for programming and communication
+ RTC Clock with day of week / date
+ Optional RS232, KNX, DALI, audio triggering, ...<br>
+ Available resources:
+224 DMX channels (512+32 with PRO Firmware)<br>
+180 Storeable scenes with fade times 0.0 to 165 Sec. 
+28	Programs (56 with PRO Firmware)
+64	Event triggers (80 with PRO Firmware)
+4	Recordable timelines with 50msek resolution (8 with PRO Firmware)<br>
+32	Sendsequences (48 with PRO Firmware)<br>
+Dokumentation and communication protocoll downloads: 
+http://www.spl-technik.at/index.php/dmxface-downloads
+ 
+## DMXface adapter for ioBroker
+This adapter connects the DMXfaceXP controller with ioBroker.
+The communication protocoll used is the DMXface ACTIVE SEND protocoll.
+Rev 1.1.0 supports additional features like min/max tracking of channels as well 
+the calculation of power consumed for selected channels.
 
-[![NPM version](http://img.shields.io/npm/v/iobroker.template.svg)](https://www.npmjs.com/package/iobroker.template)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.template.svg)](https://www.npmjs.com/package/iobroker.template)
-![Number of Installations (latest)](http://iobroker.live/badges/template-installed.svg)
-![Number of Installations (stable)](http://iobroker.live/badges/template-stable.svg)
-[![Dependency Status](https://img.shields.io/david/Author/iobroker.template.svg)](https://david-dm.org/Author/iobroker.template)
-[![Known Vulnerabilities](https://snyk.io/test/github/Author/ioBroker.template/badge.svg)](https://snyk.io/test/github/Author/ioBroker.template)
+## Setup the DMXface
+To configure the DMXface controller, you need the 'DMXface Console' downloadable at http://www.dmxface.at
+After connecting by USB, you can access and change the controllers setup und network settings as well programm the controller.
 
-[![NPM](https://nodei.co/npm/iobroker.template.png?downloads=true)](https://nodei.co/npm/iobroker.template/)
+## DMXface network settings (Menu: DMXface settings / Network setup)<br>
+Here you can configure a valid IP address for the DMXface controller.
+To get the DMXface connected to the IO Broker you have as well to setup the socket 6 or 7:
+Set it to 'TCP SERVER', 'ACTIVE SEND PROTOCOLL' with a valid PORT (Default = 6000).
 
-**Tests:** ![Test and Release](https://github.com/Author/ioBroker.template/workflows/Test%20and%20Release/badge.svg)
+## DMXface setup settings (Menu: DMXface settings / Basic setup)<br>
+To receive IO Port changes or IR Remote control data, enable 'LAN SOCKET 6 or 7 sends ACTS messages' and select 
+Outport change, Inport change and Infrared receive in the 'Send ACTS message at event' area below.
+To receive DMX channel values enable 'LAN SOCKET 6 or 7 sends DMX channel values.
+Select the number of DMX channels (max. 224) to be transmitted to ioBroker and the interval in which the channels are to be sent.
+Save the changes, done.
 
-## template adapter for ioBroker
+## Add adapter to ioBroker
+Add the DMXface adapter from github  https://github.com/DMXface/ioBroker.dmxface.git
+Create an instance of the adapter.
 
-Template for adapter development
+## Adapter configuration
+IP address:  Same as used for the DMXfaceXP controller.
+Port: Same as configured in the network socket 6 or 7.
+Last DMX channel used: Number of DMX state objects that will be created when the DMXface adapter ist started.
+Additional channel requests:
+DMXface covers the possibility to process values of DMX channels, AD values of IN- or BUSports by a conversion table. 
+Here you can list additional ports that should be requested from such a conversion.
+Enter the required channel separated by semicolons like IN1, OUT5, DMX112,...
+ioBroker requests the values one by one withing the timing and stores it in additional float numbers in states VALUE_...<br>
 
-## Developer manual
-This section is intended for the developer. It can be deleted later
+Power consumption and runtime tracking:
+Here you can list IO and DMX ports, optional with the power of the load controlled by the channel.
+Format is e.g. OUT5(750) this means that OUTPORT5 controls a 750W load.
+If no powerload is added just the runtime will be tracked.
+As soon there is a channel added you will get one or two new states for the port.
+STAT_HRS_OUTPORT05 and if a power value is added the state STAT_KWH_OUTPORT05. 
+STAT_KWH contains the KW/h and increases as soon OUTPORT5 is true.
+STAT_HRS is the time in hours while OUTPORT5 was true.
+If you use a DMX channel the power value is calculated with the value of the DMX channel.
+A DMX value =0 is off, a DMX value of 128 adds half of the power value, a DMX value 255 adds full value to the POWER_xx value.
+The STAT_HRS value increases as soon the DMX value is > 0.<br>
 
-### Getting started
+Request timing (ms): This value specifies the timing within the additional channels are requested one by one and the
+power consumption and runtime is calculated.<br>
 
-You are almost done, only a few steps left:
-1. Create a new repository on GitHub with the name `ioBroker.template`
-1. Initialize the current folder as a new git repository:  
-    ```bash
-    git init
-    git add .
-    git commit -m "Initial commit"
-    ```
-1. Link your local repository with the one on GitHub:  
-    ```bash
-    git remote add origin https://github.com/Author/ioBroker.template
-    ```
+## 1.1.0
+released for use with DMXfaceXP Controller
 
-1. Push all files to the GitHub repo:  
-    ```bash
-    git push origin master
-    ```
-1. Add a new secret under https://github.com/Author/ioBroker.template/settings/secrets. It must be named `AUTO_MERGE_TOKEN` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
-
-1. Head over to [main.js](main.js) and start programming!
-
-### Best Practices
-We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
-check them out. If you're already experienced, you should also take a look at them - you might learn something new :)
-
-### Scripts in `package.json`
-Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
-| Script name | Description |
-|-------------|-------------|
-| `test:js` | Executes the tests you defined in `*.test.js` files. |
-| `test:package` | Ensures your `package.json` and `io-package.json` are valid. |
-| `test:unit` | Tests the adapter startup with unit tests (fast, but might require module mocks to work). |
-| `test:integration` | Tests the adapter startup with an actual instance of ioBroker. |
-| `test` | Performs a minimal test run on package files and your tests. |
-| `check` | Performs a type-check on your code (without compiling anything). |
-| `lint` | Runs `ESLint` to check your code for formatting errors and potential bugs. |
-
-### Writing tests
-When done right, testing code is invaluable, because it gives you the 
-confidence to change your code while knowing exactly if and when 
-something breaks. A good read on the topic of test-driven development 
-is https://hackernoon.com/introduction-to-test-driven-development-tdd-61a13bc92d92. 
-Although writing tests before the code might seem strange at first, but it has very 
-clear upsides.
-
-The template provides you with basic tests for the adapter startup and package files.
-It is recommended that you add your own tests into the mix.
-
-### Publishing the adapter
-Since you have chosen GitHub Actions as your CI service, you can 
-enable automatic releases on npm whenever you push a new git tag that matches the form 
-`v<major>.<minor>.<patch>`. The necessary steps are described in `.github/workflows/test-and-release.yml`.
-
-To get your adapter released in ioBroker, please refer to the documentation 
-of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
-
-### Test the adapter manually on a local ioBroker installation
-In order to install the adapter locally without publishing, the following steps are recommended:
-1. Create a tarball from your dev directory:  
-    ```bash
-    npm pack
-    ```
-1. Upload the resulting file to your ioBroker host
-1. Install it locally (The paths are different on Windows):
-    ```bash
-    cd /opt/iobroker
-    npm i /path/to/tarball.tgz
-    ```
-
-For later updates, the above procedure is not necessary. Just do the following:
-1. Overwrite the changed files in the adapter directory (`/opt/iobroker/node_modules/iobroker.template`)
-1. Execute `iobroker upload template` on the ioBroker host
-
-## Changelog
-
-### 0.0.1
-* (Author) initial release
-
+##  Changelog
+1.0.0  Initial release<br>
+1.0.1  Bugfixes (reconnect procedure after loosing TCP connection)<br>
+1.0.2  File cleanup+ Bugfix (List of additional ports causes error @ first start due to NULL value<br>
+1.1.0  New version of the adapter containing min/max tracking and power tracking)
 ## License
-MIT License
+MIT License<br>
 
-Copyright (c) 2020 Author <author@mail.com>
+Copyright (c) 2020 SPaL Oliver Hufnagl <mail@dmxface.at><br>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

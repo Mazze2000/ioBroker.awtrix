@@ -1,18 +1,20 @@
-.*
+.git
+.idea
 node_modules/
 nbproject/
-*.code-workspace
+.vs*/
 Thumbs.db
 gulpfile.js
 
-# CI test files
 test/
 travis/
+.travis.yml
+appveyor.yml
+.travis.yaml
 appveyor.yaml
 
-# Type checking configuration
-tsconfig.json
-tsconfig.*.json
+.eslintrc.json
+.eslintrc.js
 
 # npm package files
 iobroker.*.tgz
