@@ -87,7 +87,7 @@ class Luftdaten extends utils.Adapter {
                                 name: key,
                                 type: 'number',
                                 role: roleList.key,
-                                unti: unitList.key,
+                                unit: unitList.key,
                                 read: true,
                                 write: false
                             },
