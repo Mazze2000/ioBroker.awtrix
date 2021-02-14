@@ -47,14 +47,14 @@ class Luftdaten extends utils.Adapter {
                         type: 'state',
                         common: {
                             name: 'installedApps',
-                            type: 'array',
+                            type: 'string',
                             role: 'json',
                             read: true,
                             write: false
                         },
                         native: {}
                     });
-                    this.setState('installedApps', {content, ack: true});
+                    this.setState('installedApps', {val: JSON.stringify(content), ack: true});
                 }
             ).catch(
                 (error) => {
