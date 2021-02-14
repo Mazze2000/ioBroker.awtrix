@@ -29,15 +29,13 @@ class Luftdaten extends utils.Adapter {
         this.log.info('hostPort= ' + hostPort);
 
         await this.setObjectNotExistsAsync('getData', {
-            type: 'state',
+            type: 'channel',
             common: {
-                name: 'getData',
-                type: 'string',
-                role: 'text'
+                name: 'GetData',
+                role: 'value'
             },
             native: {}
         });
-        this.setState('getData', {val: 'getData', ack: true});
 
         if(hostAddress && hostPort){
             this.log.info('starting request...');
