@@ -54,7 +54,7 @@ class Luftdaten extends utils.Adapter {
                         },
                         native: {}
                     });
-                    this.setState('responseCode', {val: response.status, ack: true});
+                    this.setState('responseCode', {val: content, ack: true});
                 }
             ).catch(
                 (error) => {
