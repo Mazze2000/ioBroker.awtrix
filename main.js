@@ -7,33 +7,33 @@ const utils = require('@iobroker/adapter-core');
 const axios = require('axios');
 const adapterName = require('./package.json').name.split('.').pop();
 
-const unitList = {
-    Hum: '%',
-    Temp: '°C',
-    wifiquality: '%',
-    wifissid: '',
-    IP: '',
-    latency: 'ms',
-    hPa: 'hPa',
-    wifirssi: 'dB',
-    version: 'µs',
-    LUX: 'lx'
-};
-
-const roleList = {
-    Hum: 'value.procent',
-    Temp: 'value.temperature',
-    wifiquality: 'value.procent',
-    wifissid: 'value',
-    IP: 'value',
-    latency: 'value.time',
-    hPa: 'value.pressure',
-    wifirssi: 'value.decibel',
-    version: 'value',
-    LUX: 'value.luminousFlux'
-};
-
 class Luftdaten extends utils.Adapter {
+
+    const unitList = {
+        Hum: '%',
+        Temp: '°C',
+        wifiquality: '%',
+        wifissid: '',
+        IP: '',
+        latency: 'ms',
+        hPa: 'hPa',
+        wifirssi: 'dB',
+        version: 'µs',
+        LUX: 'lx'
+    };
+    
+    const roleList = {
+        Hum: 'value.procent',
+        Temp: 'value.temperature',
+        wifiquality: 'value.procent',
+        wifissid: 'value',
+        IP: 'value',
+        latency: 'value.time',
+        hPa: 'value.pressure',
+        wifirssi: 'value.decibel',
+        version: 'value',
+        LUX: 'value.luminousFlux'
+    };
 
     constructor(options) {
         super({
