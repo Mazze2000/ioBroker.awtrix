@@ -80,7 +80,7 @@ class Luftdaten extends utils.Adapter {
                     for (var key in content){
                         var value = content[key];
                         //document.write("<br> - " + key + ": " + value);
-
+                        this.log.info('key: ' + roleList.key + ' - ' + unitList.key);
                         await this.setObjectNotExistsAsync('matrixInfo.' + key, {
                             type: 'state',
                             common: {
