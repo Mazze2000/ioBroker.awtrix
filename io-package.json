@@ -3,7 +3,7 @@
       "name":"awtrix",
       "version":"0.0.1",
       "news":{
-         "1.1.0":{
+         "0.0.1":{
             "en":"ioBroker adapter for awtrix",
             "de":"ioBroker Adapter für awtrix"
          }
@@ -57,9 +57,7 @@
    },
    "native":{
       "ipaddress":"0.0.0.0",
-      "port":"6000",
-      "requesttiming":"1000",
-      "lastdmxchannel":"0"
+      "port":"7000"
    },
    "objects":[
 
