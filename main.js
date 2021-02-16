@@ -41,7 +41,7 @@ class Luftdaten extends utils.Adapter {
             wifiquality: 'value.procent',
             wifissid: 'value',
             IP: 'value',
-            latency: 'value.time',
+            latency: 'value',
             hPa: 'value.pressure',
             wifirssi: 'value.decibel',
             version: 'value',
